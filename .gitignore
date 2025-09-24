@@ -173,3 +173,6 @@ slurm
 
 *.ipynb
 gty*
+
+# Mount NFS workspace.
+/workspace
