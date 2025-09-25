@@ -6,20 +6,21 @@ ulimit -n 4096
 source $HOME/miniconda3/etc/profile.d/conda.sh
 conda activate HELMET
 
-# Specify the model checkpoint and output directory.
+# Make use of the cluster-wise cached models.
+export HF_HUB_CACHE=/data/hf_cache
+
+# Evaluate with the base Qwen3-0.6B model, from 8K to 64K context.
 MODEL_NAME_OR_PATH=Qwen/Qwen3-0.6B
 OUTPUT_DIR=workspace/outputs/Qwen3-0.6B/short
 
-# Make use of reduced sample sizes for quick validation.
-CONFIG=configs/recall_short.yaml; MAX_TEST_SAMPLES=25
-python eval.py --config $CONFIG --model_name_or_path $MODEL_NAME_OR_PATH --output_dir $OUTPUT_DIR --max_test_samples $MAX_TEST_SAMPLES
-CONFIG=configs/rag_short.yaml; MAX_TEST_SAMPLES=25
-python eval.py --config $CONFIG --model_name_or_path $MODEL_NAME_OR_PATH --output_dir $OUTPUT_DIR --max_test_samples $MAX_TEST_SAMPLES
-CONFIG=configs/rerank_short.yaml; MAX_TEST_SAMPLES=25
-python eval.py --config $CONFIG --model_name_or_path $MODEL_NAME_OR_PATH --output_dir $OUTPUT_DIR --max_test_samples $MAX_TEST_SAMPLES
-CONFIG=configs/icl_short.yaml; MAX_TEST_SAMPLES=125
-python eval.py --config $CONFIG --model_name_or_path $MODEL_NAME_OR_PATH --output_dir $OUTPUT_DIR --max_test_samples $MAX_TEST_SAMPLES
-CONFIG=configs/longqa_short.yaml; MAX_TEST_SAMPLES=25
-python eval.py --config $CONFIG --model_name_or_path $MODEL_NAME_OR_PATH --output_dir $OUTPUT_DIR --max_test_samples $MAX_TEST_SAMPLES
-CONFIG=configs/summ_short.yaml; MAX_TEST_SAMPLES=25
-python eval.py --config $CONFIG --model_name_or_path $MODEL_NAME_OR_PATH --output_dir $OUTPUT_DIR --max_test_samples $MAX_TEST_SAMPLES
+for CONFIG in recall rag icl rerank longqa summ cite; do
+    python eval.py --config configs/${CONFIG}_short.yaml --model_name_or_path $MODEL_NAME_OR_PATH --output_dir $OUTPUT_DIR
+done
+
+# Evaluate with the base Qwen3-1.7B model, from 8K to 64K context.
+MODEL_NAME_OR_PATH=Qwen/Qwen3-1.7B
+OUTPUT_DIR=workspace/outputs/Qwen3-1.7B/short
+
+for CONFIG in recall rag icl rerank longqa summ cite; do
+    python eval.py --config configs/${CONFIG}_short.yaml --model_name_or_path $MODEL_NAME_OR_PATH --output_dir $OUTPUT_DIR
+done
