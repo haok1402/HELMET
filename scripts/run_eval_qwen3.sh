@@ -8,7 +8,7 @@ conda activate HELMET
 
 # Specify the model checkpoint and output directory.
 MODEL_NAME_OR_PATH=Qwen/Qwen3-0.6B
-OUTPUT_DIR=workspace/outputs/Qwen/Qwen3-0.6B
+OUTPUT_DIR=workspace/outputs/Qwen3-0.6B
 
 # Run the 8k to 64k versions.
 for task in recall rag rerank icl longqa summ; do
