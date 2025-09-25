@@ -8,7 +8,7 @@ conda activate HELMET
 
 # Specify the model checkpoint and output directory.
 MODEL_NAME_OR_PATH=Qwen/Qwen3-0.6B
-OUTPUT_DIR=workspace/outputs/Qwen3-0.6B
+OUTPUT_DIR=workspace/outputs/Qwen3-0.6B/short
 
 # Make use of reduced sample sizes for quick validation.
 CONFIG=configs/recall_short.yaml; MAX_TEST_SAMPLES=25
