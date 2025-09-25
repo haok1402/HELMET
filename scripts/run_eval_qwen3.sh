@@ -10,7 +10,16 @@ conda activate HELMET
 MODEL_NAME_OR_PATH=Qwen/Qwen3-0.6B
 OUTPUT_DIR=workspace/outputs/Qwen3-0.6B
 
-# Run the 8k to 64k versions.
-for task in recall rag rerank icl longqa summ; do
-    python eval.py --config configs/${task}_short.yaml --model_name_or_path ${MODEL_NAME_OR_PATH} --output_dir ${OUTPUT_DIR}
-done
+# Make use of reduced sample sizes for quick validation.
+CONFIG=configs/recall_short.yaml; MAX_TEST_SAMPLES=25
+python eval.py --config $CONFIG --model_name_or_path $MODEL_NAME_OR_PATH --output_dir $OUTPUT_DIR --max_test_samples $MAX_TEST_SAMPLES
+CONFIG=configs/rag_short.yaml; MAX_TEST_SAMPLES=25
+python eval.py --config $CONFIG --model_name_or_path $MODEL_NAME_OR_PATH --output_dir $OUTPUT_DIR --max_test_samples $MAX_TEST_SAMPLES
+CONFIG=configs/rerank_short.yaml; MAX_TEST_SAMPLES=25
+python eval.py --config $CONFIG --model_name_or_path $MODEL_NAME_OR_PATH --output_dir $OUTPUT_DIR --max_test_samples $MAX_TEST_SAMPLES
+CONFIG=configs/icl_short.yaml; MAX_TEST_SAMPLES=125
+python eval.py --config $CONFIG --model_name_or_path $MODEL_NAME_OR_PATH --output_dir $OUTPUT_DIR --max_test_samples $MAX_TEST_SAMPLES
+CONFIG=configs/longqa_short.yaml; MAX_TEST_SAMPLES=25
+python eval.py --config $CONFIG --model_name_or_path $MODEL_NAME_OR_PATH --output_dir $OUTPUT_DIR --max_test_samples $MAX_TEST_SAMPLES
+CONFIG=configs/summ_short.yaml; MAX_TEST_SAMPLES=25
+python eval.py --config $CONFIG --model_name_or_path $MODEL_NAME_OR_PATH --output_dir $OUTPUT_DIR --max_test_samples $MAX_TEST_SAMPLES
