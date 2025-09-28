@@ -63,5 +63,7 @@ if __name__ == "__main__":
     # That is the max length supported by Qwen3-0.6B, without any extension.
     workspace, maxlen = Path("workspace/outputs/Qwen3-0.6B/short"), 32768
     main(workspace, maxlen)
-    workspace, maxlen = Path("workspace/outputs/Qwen3-0.6B-64K-rope4M/checkpoint-500/short"), 32768
+    workspace, maxlen = Path("workspace/outputs/Qwen3-1.7B/short"), 32768
+    main(workspace, maxlen)
+    workspace, maxlen = Path("workspace/outputs/Qwen3-0.6B-64K-rope4M/checkpoint-1000/short"), 32768
     main(workspace, maxlen)
