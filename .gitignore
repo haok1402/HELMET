@@ -168,6 +168,7 @@ cython_debug/
 
 data
 output
+logging
 configs/_*
 slurm
 
